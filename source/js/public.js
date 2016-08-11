@@ -1,5 +1,5 @@
 var ADMIN_CONFIG = {
-	"homePage": "welcome.html",
+	"homePage": "userManagement.html",
 	"mainBodySelector": "#admin_body",
 	"headerSelector": "#admin_header",
 	"contentSelector": "#admin_content",
@@ -10,7 +10,6 @@ $(function(){
     function adminInit(){
     	eventBind();
     }
-
 });
 function eventBind(){
     // eventBind 仅进行一次
