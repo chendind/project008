@@ -123,7 +123,42 @@ function uiComponentEventBind(){
             }
         })
     });
-    
+    $.each($("[data-sildeImageBox]"),function(){
+        var $this = $(this);
+        var src = $this.attr("data-src");
+        if(src){
+            var image = '<img src="'+src+'" />';
+            $this.find(".slideImageUpload").append(image);
+        }
+        $this.find(".slideImageUpload").bind('click',function(){
+            var $slideImageUpload = $(this);
+            var $sildeImageBox = $this;
+            // 值为0时说明这个为传图片的盒子
+            if($(this).closest("[data-sildeImageBox]").attr("data-sildeImageBox")!=1){
+                var fileInput = document.createElement("input");
+                fileInput.type = "file";
+                fileInput.click();
+                fileInput.addEventListener('change',function(event){
+                    var objectURL = window.URL.createObjectURL(this.files[0]);
+                    if(this.files[0].type.match(/image\/\w*/)){
+                        var _image = '<img src="'+objectURL+'" />';
+                        $sildeImageBox.clone().attr({
+                            ""
+                        })
+                        $slideImageUpload.append(_image);
+                    }
+                    else{
+                        alert("请上传图片格式的文件");
+                    }
+                    
+                });
+            }
+        });
+        $(this).find(".deleteButton").bind('click',function(){
+            var $deleteButton = $(this);
+            $deleteButton.closest(".amin_ui_slideImageBox").remove();
+        });
+    });
 }
 function windowReset(){
 	var h =  $(window).height()-$(ADMIN_CONFIG.headerSelector).height();
