@@ -48,6 +48,7 @@ function eventBind(){
     });
 }
 function uiComponentEventBind(){
+    // 自动填充输入框 开始
     $.each($("[data-autoComplete]"),function(){
         var $this = $(this);
         var $input = $(this).children('input');
@@ -123,6 +124,8 @@ function uiComponentEventBind(){
             }
         })
     });
+    // 自动填充输入框 结束
+    // 上传轮播图部分 开始
     $.each($("[data-sildeImageBox]"),function(){
         var $this = $(this);
         var src = $this.attr("data-src");
@@ -139,13 +142,15 @@ function uiComponentEventBind(){
                 fileInput.type = "file";
                 fileInput.click();
                 fileInput.addEventListener('change',function(event){
-                    var objectURL = window.URL.createObjectURL(this.files[0]);
                     if(this.files[0].type.match(/image\/\w*/)){
+                        var objectURL = window.URL.createObjectURL(this.files[0]);
                         var _image = '<img src="'+objectURL+'" />';
-                        $sildeImageBox.clone().attr({
-                            ""
-                        })
-                        $slideImageUpload.append(_image);
+                        var $_sildeImageBox = $sildeImageBox.clone().attr({
+                            "data-src": objectURL,
+                            "data-sildeImageBox": 1
+                        });
+                        $_sildeImageBox.find(".slideImageUpload").append(_image);
+                        $_sildeImageBox.insertBefore($this);
                     }
                     else{
                         alert("请上传图片格式的文件");
@@ -154,11 +159,12 @@ function uiComponentEventBind(){
                 });
             }
         });
-        $(this).find(".deleteButton").bind('click',function(){
-            var $deleteButton = $(this);
-            $deleteButton.closest(".amin_ui_slideImageBox").remove();
-        });
     });
+    $(".admin_ui_cont").on('click','.deleteButton',function(){
+        var $deleteButton = $(this);
+        $deleteButton.closest(".amin_ui_slideImageBox").remove();
+    });
+    // 上传轮播图部分 结束
 }
 function windowReset(){
 	var h =  $(window).height()-$(ADMIN_CONFIG.headerSelector).height();
