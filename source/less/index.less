@@ -7,6 +7,18 @@
 @yellowColor: #f8a326;
 @blueColor: #00acec;
 @textColor: #999;
+.redColor{
+	color: @redColor;
+}
+.greenColor{
+	color: @greenColor;
+}
+.yellowColor{
+	color: @yellowColor;
+}
+.blueColor{
+	color: @blueColor;
+}
 body{
 	position: absolute;
 	width: 100%;
@@ -571,6 +583,34 @@ body{
 	padding-left: 7px;
 	background-color: white;
 	/*border-radius: 5px;*/
+}
+.admin_ui_statisticsBox{
+	.after;
+	.admin_ui_statisticsBox_unit{
+		height: 70px;
+		width: 230px;
+		background-color: #fff;
+		border: 1px solid @lineColor;
+		padding: 10px;
+		float: left;
+		margin-right: 10px;
+		margin-bottom: 10px;
+		.rightPart{
+			float: left;
+			.value{
+				font-size: 21px;
+				line-height: 28px;
+				font-weight: bold;
+			}
+			.name{
+				font-size: 14px;
+			}
+		}
+		.leftPart{
+			float: right;
+			font-size: 30px;
+		}
+	}
 }
 .amin_ui_slideImageBox{
 	padding: 10px;

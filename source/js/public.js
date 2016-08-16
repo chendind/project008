@@ -34,14 +34,14 @@ function eventBind(){
     $(ADMIN_CONFIG.leftSelector+" .leftmenu>div>.line").bind('click',function(){
     	if($(this).next('.submenu').length){
     		// 有子菜单
-    		if($(this).hasClass("active")){
+    		if($(this).parent().hasClass("active")){
     			// 打开的
     			$(this).next('.submenu').slideUp(300);
-    			$(this).removeClass("active");
+    			$(this).parent().removeClass("active");
     		}
     		else{
     			$(this).next('.submenu').slideDown(300);
-    			$(this).addClass("active");
+    			$(this).parent().addClass("active");
     		}
     		
     	}
