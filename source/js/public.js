@@ -23,11 +23,11 @@ function eventBind(){
         window.history.back();
     })
 	$(ADMIN_CONFIG.headerSelector+" .client").bind("click",function(e){
-        if($(".dropdown-menu").is(":hidden")){
-          	$(".dropdown-menu").show();
+        if($("#admin_ui_dropdown_menu").is(":hidden")){
+          	$("#admin_ui_dropdown_menu").show();
         }
         else{
-          	$(".dropdown-menu").hide();
+          	$("#admin_ui_dropdown_menu").hide();
         }
         e.stopPropagation();
     });

@@ -283,7 +283,7 @@ body {
 .admin_ui_button.admin_ui_button_yellow:hover {
   background-color: #f7990d;
 }
-.dropdown-menu {
+.admin_ui_dropdown_menu {
   position: absolute;
   background-color: white;
   list-style: none;
@@ -296,10 +296,7 @@ body {
   cursor: pointer;
   display: none;
 }
-.dropdown-menu li {
-  padding: 0 10px;
-}
-.dropdown-menu:after {
+.admin_ui_dropdown_menu:after {
   position: absolute;
   top: -6px;
   right: 10px;
@@ -309,7 +306,7 @@ body {
   border-left: 6px solid transparent;
   content: '';
 }
-.dropdown-menu:before {
+.admin_ui_dropdown_menu:before {
   position: absolute;
   top: -7px;
   right: 9px;
@@ -320,7 +317,12 @@ body {
   border-bottom-color: rgba(0, 0, 0, 0.2);
   content: '';
 }
-.dropdown-menu li:hover {
+.admin_ui_dropdown_menu a {
+  display: block;
+  width: 100%;
+  padding: 0 10px;
+}
+.admin_ui_dropdown_menu a:hover {
   background-color: #f34541;
   color: white;
 }
