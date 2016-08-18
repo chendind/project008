@@ -19,8 +19,8 @@
 						</td>
 						<td>
 							<div class="admin_ui_form_field">
-								<div class="admin_ui_name">用户名</div>
-								<input class="admin_ui_input" type="text" value="管理员" />
+								<div id="adminAccount_adminName" class="admin_ui_name">用户名</div>
+								<input class="admin_ui_input" type="text" value="" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">角色</div>
@@ -65,26 +65,25 @@
 						<td>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">用户名</div>
-								<input class="admin_ui_input" type="text" disabled />
+								<input id="addAdmin_adminName" class="admin_ui_input" type="text" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">角色</div>
 								<div class="admin_ui_select">
 									<select>
-										<option>主管理员</option>
-										<option>辅助管理员</option>
+										<option selected>普通管理员</option>
 									</select>
 								</div>
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">设置密码</div>
-								<input class="admin_ui_input" type="password" placeholder="请输入密码" />
+								<input id="addAdmin_password" class="admin_ui_input" type="password" placeholder="请输入密码" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">确定密码</div>
-								<input class="admin_ui_input" type="password" placeholder="请再次输入密码" />
+								<input id="addAdmin_passwordConfirm" class="admin_ui_input" type="password" placeholder="请再次输入密码" />
 							</div>
-							<div class="admin_ui_button admin_ui_button_green" style="margin-top: 40px;">
+							<div id="addAdminButton" class="admin_ui_button admin_ui_button_green" style="margin-top: 40px;">
 								确定新增
 							</div>
 						</td>
@@ -95,6 +94,8 @@
 	</div>
 </div>
 <script>
+// 把头部的管理员名字直接拷过来
+$("#adminAccount_adminName").val($("#admin_name").text());
 $("#changePasswordButton").bind('click',function(){
 	var oldPassword = $.trim($("#oldPassword").val()),
 		newPassword = $.trim($("#newPassword").val()),
@@ -106,7 +107,7 @@ $("#changePasswordButton").bind('click',function(){
 		alert("请输入新密码");
 	}
 	else if(newPassword != newPasswordConfirm){
-		alert("新密码与原密码不一致,请检查");
+		alert("两次输入密码不一致，请检查");
 	}
 	else{
 		$.when(changePassword(oldPassword,newPassword)).done(function(data){
@@ -115,7 +116,28 @@ $("#changePasswordButton").bind('click',function(){
 			}
 		});
 	}
-})
+});
+$("#addAdminButton").bind('click',function(data){
+	var addAdmin_adminName = $("#addAdmin_adminName").val(),
+		addAdmin_password = $("#addAdmin_password").val(),
+		addAdmin_passwordConfirm = $("#addAdmin_passwordConfirm").val();
+	if(!addAdmin_adminName){
+		alert("请输入管理员用户名");
+	}
+	else if(!addAdmin_password){
+		alert("请输入密码");
+	}
+	else if(addAdmin_password != addAdmin_passwordConfirm){
+		alert("两次输入密码不一致，请检查");
+	}
+	else{
+		$.when(addAdmin(addAdmin_adminName, addAdmin_password)).done(function(data){
+			if(data.state == 0){
+				alert("新增用户成功，用户名："+addAdmin_adminName+"，密码："+addAdmin_password);
+			}
+		});
+	}
+});
 </script>
 
 

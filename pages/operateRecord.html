@@ -1,7 +1,7 @@
 <div class="admin_content_innerBox">
 	<div class="admin_scrollBox">
 		<div class="admin_ui_header">
-			<i class="fa fa-table fa-2x admin_ui_mainColor"></i>
+			<i class="fa fa-history fa-2x admin_ui_mainColor"></i>
 			<span class="maintitle">操作记录</span>
 		</div>	
 		<div class="admin_ui_cont">
@@ -9,24 +9,13 @@
 				<thead>
 					<tr>
 						<th>操作id</th>
+						<th>管理员id</th>
 						<th>管理员</th>
 						<th>登录时间</th>
-						<th>操作</th>
+						<th style="width: 30%;">操作</th>
 					</tr>
 				</thead>
-				<tbody class="admin_ui_table_hoverEffect">
-					<tr>
-						<td>
-							10001
-						</td>
-						<td>猪八戒</td>
-						<td>
-							2016-08-10
-						</td>
-						<td class="admin_ui_table_action">
-							修改了某某基本信息
-						</td>
-					</tr>
+				<tbody id="operateRecord_data" class="admin_ui_table_hoverEffect">
 				</tbody>
 			</table>
 			<div class="admin_ui_pagination">
@@ -36,5 +25,27 @@
 	</div>
 </div>
 <script type="text/javascript">
-	TablePage(".admin_ui_table",10);
+	$.when(getRecord()).done(function(data){
+		if(data.state == 0){
+			var html = "";
+			for(var i = 0, length = data.record.length; i < length; i++){
+				var record = data.record[i];
+				html+= '<tr>'+
+							'<td>'+record.id+'</td>'+
+							'<td>'+record.user.id+'</td>'+
+							'<td>'+
+						(record.user.userinfo.nick?record.user.userinfo.nick:"管理员")+
+							'</td>'+
+							'<td>'+
+								stamp2time(record.in_time)+
+							'</td>'+
+							'<td>'+
+								record.text
+							'</td>'+
+						'</tr>';
+			}
+			$("#operateRecord_data").append(html);
+			TablePage(".admin_ui_table",10);
+		}
+	});
 </script>

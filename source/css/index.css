@@ -377,6 +377,7 @@ body {
 .admin_ui_table tr td {
   padding: 8px;
   border: 1px solid #ddd;
+  word-break: break-all;
 }
 .admin_ui_form {
   border-collapse: collapse;

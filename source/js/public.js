@@ -192,6 +192,7 @@ function stamp2time(stamp) {
     var month = time.getMonth() - 0 + 1;
     month = month < 10 ? "0" + month : month;
     var day = time.getDate();
+    day = day < 10 ? "0" + day : day;
     var hour = time.getHours();
     var minute = time.getMinutes();
 

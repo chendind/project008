@@ -62,7 +62,7 @@ function getMyInfo(){
 //增加一个管理员
 function addAdmin(username,password){
 	var ajax = $.ajax({
-		url: "/front/my_info",
+		url: "/admin/addAdmin",
 		type: "POST",
 		data:{
 			"username": username,
@@ -238,7 +238,16 @@ function getStatisticsComment(){
 	});
 	return ajax;
 }
-
+// 获取操作记录
+function getRecord(){
+	var ajax = $.ajax({
+		url: "/admin/getRecord",
+		type: "POST",
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
 
 
 
