@@ -1,0 +1,45 @@
+<div class="admin_content_innerBox">
+	<div class="admin_scrollBox">
+		<div class="admin_ui_header">
+			<i class="fa fa-sticky-note fa-2x admin_ui_mainColor"></i>
+			<span class="maintitle">意见统计</span>
+		</div>	
+		<div class="admin_ui_cont">
+			<table class="admin_ui_table">
+				<thead>
+					<tr>
+						<th>用户id</th>
+						<th>用户名</th>
+						<th>提交时间</th>
+						<th>意见详情</th>
+					</tr>
+				</thead>
+				<tbody class="admin_ui_table_hoverEffect">
+					<tr>
+						<td>
+							345
+						</td>
+						<td>猪八戒</td>
+						<td>
+							2016-08-10 10:29:43
+						</td>
+						<td class="admin_ui_table_action">
+							陈春霞
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="admin_ui_pagination">
+				
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$.when(getStatisticsComment()).done(function(data){
+		if(data.state == 0){
+			
+		}
+	})
+	TablePage(".admin_ui_table",10);
+</script>

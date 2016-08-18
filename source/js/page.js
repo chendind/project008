@@ -25,8 +25,8 @@ function TablePage(id,size){
                 $(".page a span").not($(this).children("span")).attr("class","");  
                 $(".page a span").not($(this).children("span")).css({"color":"#000"});
                 $table.trigger("repaginate");  
-            })  
-            .appendTo($pager);  
+            })
+            .appendTo($pager);
   
         $pager.append("  ");  
     }  

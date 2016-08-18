@@ -8,6 +8,12 @@ var ADMIN_CONFIG = {
 $(function(){
     adminInit();
     function adminInit(){
+        $.when(getMyInfo()).done(function(data){
+            if(data.state == 0){
+                var info = data.info;
+                $("#admin_name").text(info.nick||"管理员");
+            }
+        });
     	eventBind();
     }
 });
@@ -179,9 +185,58 @@ function loadContent() {
         uiComponentEventBind();
     });
 }
+// 时间戳转化为时间
+function stamp2time(stamp) {
+    var time = new Date(stamp);
+    var year = time.getFullYear();
+    var month = time.getMonth() - 0 + 1;
+    month = month < 10 ? "0" + month : month;
+    var day = time.getDate();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
 
+    var now = new Date();
+    var nowyear = now.getFullYear();
+    var nowmonth = now.getMonth() - 0 + 1;
+    nowmonth = nowmonth < 10 ? "0" + nowmonth : nowmonth;
+    var nowday = now.getDate();
+    var timeString = '';
+    //if (year != nowyear) {
+        return year + "-" + month + "-" + day;
+    //} else {
+    //    // 今年
+    //    if (month == nowmonth && day == nowday) {
+    //        // 说明是今天
+    //        return hour + ":" + minute;
+    //    } else {
+    //        return month + "-" + day;
+    //    }
+    //}
+}
+function getQueryData(){
+    var URI = decodeURI(window.location.hash.split("?")[1]);
+    var parseURI = URI;
+    if(URI){
+        try{
+            parseURI = JSON.parse(URI);
+        }
+        catch(e){
+            parseURI = "";
+        }
+    }
+    return parseURI;
 
-
+}
+function handleNullObject(object,key){
+    var value;
+    try{
+        value = object[key];
+    }
+    catch(e){
+        value = "";
+    }
+    return value;
+}
 
 
 

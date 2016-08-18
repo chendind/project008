@@ -20,31 +20,31 @@
 						<td>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">用户名</div>
-								<input class="admin_ui_input" type="text" disabled />
+								<input class="admin_ui_input" type="text" value="管理员" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">角色</div>
 								<div class="admin_ui_select">
 									<select disabled>
 										<option selected>主管理员</option>
-										<option>辅助管理员</option>
+										<option>一般管理员</option>
 									</select>
 								</div>
 							</div>								
 							<div class="admin_ui_separator"></div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">原密码</div>
-								<input class="admin_ui_input" type="password" placeholder="请输入原密码" />
+								<input id="oldPassword" class="admin_ui_input" type="password" placeholder="请输入原密码" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">新密码</div>
-								<input class="admin_ui_input" type="password" placeholder="请输入新密码" />
+								<input id="newPassword" class="admin_ui_input" type="password" placeholder="请输入新密码" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">确认新密码</div>
-								<input class="admin_ui_input" type="password" placeholder="请再次输入新密码" />
+								<input id="newPasswordConfirm" class="admin_ui_input" type="password" placeholder="请再次输入新密码" />
 							</div>
-							<div class="admin_ui_button admin_ui_button_green" style="margin-top: 40px;">
+							<div id="changePasswordButton" class="admin_ui_button admin_ui_button_green" style="margin-top: 40px;">
 								确定修改
 							</div>
 						</td>
@@ -94,7 +94,29 @@
 		</div>
 	</div>
 </div>
-
+<script>
+$("#changePasswordButton").bind('click',function(){
+	var oldPassword = $.trim($("#oldPassword").val()),
+		newPassword = $.trim($("#newPassword").val()),
+		newPasswordConfirm = $.trim($("#newPasswordConfirm").val());
+	if(!oldPassword){
+		alert("请输入原密码");
+	}
+	else if(!newPassword){
+		alert("请输入新密码");
+	}
+	else if(newPassword != newPasswordConfirm){
+		alert("新密码与原密码不一致,请检查");
+	}
+	else{
+		$.when(changePassword(oldPassword,newPassword)).done(function(data){
+			if(data.state == 0){
+				alert("修改成功!");
+			}
+		});
+	}
+})
+</script>
 
 
 

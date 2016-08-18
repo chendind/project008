@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="../source/css/page.css">
 
     <script src="../source/js/jquery-1.11.1.min.js"></script>
+    <script src="../source/js/ajax.js"></script>
     <script src="../source/js/public.js"></script>
 
     <script src="../source/plunges/tinymce/tinymce.js"></script>
@@ -36,15 +37,14 @@
         </div>
         <div class="client" id="client">
             <img src="../source/images/avatar.jpg" class="personimg">
-            <div class="name">&nbsp;&nbsp;Mila Kunis</div>
+            <div id="admin_name" class="name"></div>
             <div class="xiala"><i class="fa fa-sort-desc" style="color:white"></i></div>
         </div>
         <div id="admin_ui_dropdown_menu" class="admin_ui_dropdown_menu" data-hideWhenBlur>
             <a href="#/adminAccount.html">
                 <i class="fa fa-cogs"></i>&nbsp;账号管理
             </a>
-        
-            <a href="sign_in.html">
+            <a id="logoutButton">
                 <i class="fa fa-sign-out"></i>&nbsp;退出登录
             </a>
         </div>
@@ -105,7 +105,7 @@
                     </a>
                     <a class="line" href="#/wardrobeManagement.html">
                         <span class="icon markIcon">
-                            <i class="fa fa-user-secret"></i>
+                            <i class="fa fa-black-tie"></i>
                         </span>
                         <div class="name">衣橱管理</div>
                     </a>
@@ -254,5 +254,14 @@
     </div>
     <div id="admin_content" class="admin_content"></div>
 </div>
+<script>
+    $("#logoutButton").bind('click',function(){
+        $.when(logoutApi()).done(function(data){
+            if(data.state == 0){
+                window.location.href="sign_in.html";
+            }
+        })
+    });
+</script>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../source/plunges/fontAwesome/Font-Awesome-4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../source/css/sign_in.css">
     <script src="../source/js/jquery-1.11.1.min.js"></script>
-    <script src="../source/js/public.js"></script>
+	<script src="../source/js/ajax.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -30,10 +30,31 @@
 				<i class="fa fa-lock user" ></i>
 			</div>
 			
-			<a href="index.html" class="btn" style="cursor:pointer">登录</a>
+			<a id="loginButton" class="btn" style="cursor:pointer">登录</a>
 			
 		</div>
 	</div>
-	
+<script>
+$("#loginButton").bind("click",function(){
+	var mail = $.trim($("#mail").val()), pass = $.trim($("#pass").val());
+	if(!mail){
+		alert("请输入用户名!");
+	}
+	else if(!pass){
+		alert("请输入密码");
+	}
+	else {
+		$.when(loginApi(mail,pass)).done(function (data) {
+			if (data.state == 0) {
+				window.location.href = "index.html";
+			}
+			else{
+				console.log(data);
+			}
+		})
+	}
+})
+
+</script>
 </body>
 </html>

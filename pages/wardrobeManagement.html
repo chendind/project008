@@ -1,7 +1,7 @@
 <div class="admin_content_innerBox">
 	<div class="admin_scrollBox">
 		<div class="admin_ui_header">
-			<i class="fa fa-table fa-2x admin_ui_mainColor"></i>
+			<i class="fa fa-black-tie fa-2x admin_ui_mainColor"></i>
 			<span class="maintitle">衣橱管理</span>
 		</div>	
 		<div class="admin_ui_cont">
@@ -20,19 +20,7 @@
 						<th>标签id</th>
 					</tr>
 				</thead>
-				<tbody class="admin_ui_table_hoverEffect">
-					<tr>
-						<td>
-							10001
-						</td>
-						<td>猪八戒</td>
-						<td>
-							春
-						</td>
-						<td>
-							10003
-						</td>
-					</tr>
+				<tbody id="wardrobeManagement_data" class="admin_ui_table_hoverEffect">
 				</tbody>
 			</table>
 			<div class="admin_ui_pagination">
@@ -42,5 +30,52 @@
 	</div>
 </div>
 <script type="text/javascript">
-	TablePage(".admin_ui_table",10);
+	$.when(getWardrobe()).done(function(data){
+		if(data.state == 0){
+			var html = "";
+			for(var i = 0, length = data.point.length; i < length; i++){
+				var point = data.point[i];
+				html+= '<tr data-pointId="'+point.id+'">'+
+							'<td>'+point.id+'</td>'+
+							'<td>'+
+								"发布人暂缺"+
+							'</td>'+
+							'<td>'+point.season+'</td>'+
+							'<td>'+
+								getLabelList(point.pointShows)+
+							'</td>'+
+						'</tr>';
+			}
+			$("#wardrobeManagement_data").append(html);
+			TablePage(".admin_ui_table",10);
+		}
+	});
+var colorList = ["admin_ui_colorLabel_red","admin_ui_colorLabel_green","admin_ui_colorLabel_yellow"];
+function getLabelList(pointShows){
+	var html = "";
+	for(var i = 0, length = pointShows.length; i < length; i++){
+		html += '<a href="'+pointShows[i].url+'" class="admin_ui_colorLabel '+colorList[i%3]+'">'+pointShows[i].name+'</a>';
+	}
+	return html;
+}
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
