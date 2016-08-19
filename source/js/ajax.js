@@ -11,6 +11,12 @@ function successHandle(data){
 		alert(data.msg);
 	}
 }
+// 获取图片
+function getImageByUrl(url,width,height){
+	width = width?width:"";
+	height = height?height:"";
+	return "/map?photo="+url+"&width="+width+"&height="+height;
+}
 //登入
 function loginApi(username,password){
 	var ajax = $.ajax({

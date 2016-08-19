@@ -5,27 +5,35 @@
 			<span class="maintitle">轮播图设置</span>
 		</div>	
 		<div class="admin_ui_cont">
-			<div class="amin_ui_slideImageBox" data-sildeImageBox="1" data-src="../source/images/pic.jpg">
-				<div class="slideImageUpload">
-					<p class="tip">
-						<i class="fa fa-cloud-upload"></i>
-						点击上传图片
-					</p>
-				</div>
-				<input type="text" class="admin_ui_input" placeholder="请输入图片顺序" value="1" style="margin-bottom: 10px;" />
-				<a href="#/contentInfo.html" class="admin_ui_button admin_ui_button_white deleteButton" style="margin-bottom: 8px;">查看详情</a>
-				<div class="admin_ui_button admin_ui_button_red deleteButton">删除</div>
+			<div class="admin_ui_border admin_ui_cont_header admin_ui_cont_header_grey">
+				顶部轮播图
 			</div>
-			<div class="amin_ui_slideImageBox" data-sildeImageBox="0" data-src="">
-				<div class="slideImageUpload">
-					<p class="tip">
-						<i class="fa fa-cloud-upload"></i>
-						点击上传图片
-					</p>
+			<div id="topSlideImagesBox" class="admin_ui_border admin_ui_cont" style="margin-bottom: 20px;">
+				<div class="amin_ui_slideImageBox" data-sildeImageBox="0" data-src="">
+					<div class="slideImageUpload">
+						<p class="tip">
+							<i class="fa fa-cloud-upload"></i>
+							点击上传图片
+						</p>
+					</div>
+					<a href="#/contentInfo.html" class="admin_ui_button admin_ui_button_white deleteButton" style="margin-bottom: 8px;">查看详情</a>
+					<div class="admin_ui_button admin_ui_button_red deleteButton">删除</div>
 				</div>
-				<input type="text" class="admin_ui_input" placeholder="请输入图片顺序">
-				<a href="#/contentInfo.html" class="admin_ui_button admin_ui_button_white deleteButton" style="margin-bottom: 8px;">查看详情</a>
-				<div class="admin_ui_button admin_ui_button_red deleteButton">删除</div>
+			</div>
+			<div class="admin_ui_border admin_ui_cont_header admin_ui_cont_header_grey">
+				底部轮播图
+			</div>
+			<div id="bottomSlideImagesBox" class="admin_ui_border admin_ui_cont">
+				<div class="amin_ui_slideImageBox" data-sildeImageBox="0" data-src="">
+					<div class="slideImageUpload">
+						<p class="tip">
+							<i class="fa fa-cloud-upload"></i>
+							点击上传图片
+						</p>
+					</div>
+					<a href="#/contentInfo.html" class="admin_ui_button admin_ui_button_white deleteButton" style="margin-bottom: 8px;">查看详情</a>
+					<div class="admin_ui_button admin_ui_button_red deleteButton">删除</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -40,7 +48,46 @@
 		</div>
 	</div>
 </div>
-
+<div id="template" class="template" style="display:block">
+	<div class="amin_ui_slideImageBox" data-sildeImageBox="1" data-src="">
+		<div class="slideImageUpload">
+			<p class="tip">
+				<i class="fa fa-cloud-upload"></i>
+				点击上传图片
+			</p>
+		</div>
+		<a href="#/contentInfo.html" class="admin_ui_button admin_ui_button_white deleteButton" style="margin-bottom: 8px;">查看详情</a>
+		<div class="admin_ui_button admin_ui_button_red deleteButton">删除</div>
+	</div>
+</div>
+<script>
+	$.when(getSlideImages()).done(function(data){
+		if(data.state == 0){
+			// 顶部轮播图
+			var topSlideImages = data.top, bottomSlideImages = data.bottom;
+			var temHtml = $("<div>");
+			for(var t = 0, length = topSlideImages.length; t < length; t++){
+				var _topSlideImage = topSlideImages[t];
+				var _html = $("#template .amin_ui_slideImageBox").clone();
+				var img = new Image();
+				img.src = getImageByUrl(_topSlideImage.photo.url);
+				_html.attr("data-src",img.src).find(".slideImageUpload").append(img);
+				temHtml.append(_html);
+			}
+			$("#topSlideImagesBox").prepend(temHtml.html());
+			temHtml.empty();
+			for(var t = 0, length = bottomSlideImages.length; t < length; t++){
+				var _bottomSlideImage = bottomSlideImages[t];
+				var _html = $("#template .amin_ui_slideImageBox").clone();
+				var img = new Image();
+				img.src = getImageByUrl(_bottomSlideImage.photo.url);
+				_html.attr("data-src",img.src).find(".slideImageUpload").append(img);
+				temHtml.append(_html);
+			}
+			$("#bottomSlideImagesBox").prepend(temHtml.html());
+		}
+	})
+</script>
 
 
 

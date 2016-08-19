@@ -213,6 +213,31 @@ body {
   border: 1px solid #ddd;
   background-color: #fff;
 }
+.admin_ui_cont_header {
+  font-size: 21px;
+  padding: 10px 15px;
+  line-height: 30px;
+  border-bottom: none;
+}
+.admin_ui_cont_header.admin_ui_cont_header_grey {
+  background-color: #f4f5f6;
+}
+.admin_ui_cont_header.admin_ui_cont_header_red {
+  background-color: #f34541;
+  color: #fff;
+}
+.admin_ui_cont_header.admin_ui_cont_header_green {
+  background-color: #49bf67;
+  color: #fff;
+}
+.admin_ui_cont_header.admin_ui_cont_header_yellow {
+  background-color: #f8a326;
+  color: #fff;
+}
+.admin_ui_cont_header.admin_ui_cont_header_blue {
+  background-color: #00acec;
+  color: #fff;
+}
 .admin_ui_cont {
   padding: 20px;
 }
@@ -639,7 +664,7 @@ body {
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 40%;
+  padding-bottom: 66%;
   border: 1px dashed #ddd;
   margin-bottom: 5px;
   cursor: pointer;

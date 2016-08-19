@@ -38,7 +38,7 @@
 		alert("查询参数错误，为您自动跳转至列表页");
 		window.location.hash = "#/showImageManagement.html";
 	}
-	$("#showImagePhoto").attr("src","/map?photo="+handleNullObject(queryData.photo, "url"));
+	$("#showImagePhoto").attr("src", getImageByUrl(handleNullObject(queryData.photo, "url")));
 	$("#showImageId").text(queryData.id);
 	$("#showImageLike").text(queryData.like);
 	$("#showImageComment").text(queryData.comment);
