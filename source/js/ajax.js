@@ -17,6 +17,18 @@ function getImageByUrl(url,width,height){
 	height = height?height:"";
 	return "/map?photo="+url+"&width="+width+"&height="+height;
 }
+function uploadImage(formData){
+	var ajax = $.ajax({
+		url: "/upload",
+		type: "POST",
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
 //登入
 function loginApi(username,password){
 	var ajax = $.ajax({
@@ -141,6 +153,72 @@ function getSlideImages(){
 	});
 	return ajax;
 }
+//增加顶端轮播图
+function addTopSlideImages(formData){
+	var ajax = $.ajax({
+		url: "/admin/addTopCarousel",
+		type: "POST",
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 编辑轮播图url
+function editTopSlideImagesUrl(id,url){
+	var ajax = $.ajax({
+		url: "/admin/changeTopUrl",
+		type: "POST",
+		data: {
+			"id": id,
+			"url": url
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+//增加底端轮播图
+function addBottomSlideImages(formData){
+	var ajax = $.ajax({
+		url: "/admin/addBottomCarousel",
+		type: "POST",
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 删除顶部轮播图
+function deleteTopSlideImages(slideImageId){
+	var ajax = $.ajax({
+		url: "/admin/deleteTopCarousel",
+		type: "POST",
+		data: {
+			"id": slideImageId
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 删除底部轮播图
+function deleteBottomSlideImages(slideImageId){
+	var ajax = $.ajax({
+		url: "/admin/deleteBottomCarousel",
+		type: "POST",
+		data: {
+			"id": slideImageId
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
 // 获取评论列表
 function getComments(){
 	var ajax = $.ajax({
@@ -204,6 +282,32 @@ function cancelTopShow(showId){
 	});
 	return ajax;
 }
+//把秀图设为顶部轮播图
+function addShowImageAsTopSlideImage(showId){
+	var ajax = $.ajax({
+		url: "/admin/addTopShow",
+		type: "POST",
+		data: {
+			"show":showId
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+//把秀图设为底部轮播图
+function addShowImageAsBottomSlideImage(showId){
+	var ajax = $.ajax({
+		url: "/admin/addBottomShow",
+		type: "POST",
+		data: {
+			"show":showId
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
 // 获得标签列表
 function getLabel(){
 	var ajax = $.ajax({
@@ -254,8 +358,33 @@ function getRecord(){
 	});
 	return ajax;
 }
-
-
+// 设置全局变量
+function setGlobal(name, text){
+	var ajax = $.ajax({
+		url: "/admin/setGlobal",
+		type: "POST",
+		data:{
+			"name": name,
+			"text": text
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 读取全局变量
+function getGlobal(name){
+	var ajax = $.ajax({
+		url: "/front/getGlobal",
+		type: "POST",
+		data:{
+			"name": name
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
 
 
 

@@ -146,15 +146,23 @@ function uiComponentEventBind(){
             if($(this).closest("[data-sildeImageBox]").attr("data-sildeImageBox")!=1){
                 var fileInput = document.createElement("input");
                 fileInput.type = "file";
+                fileInput.accept="image/*";
                 fileInput.click();
                 fileInput.addEventListener('change',function(event){
                     if(this.files[0].type.match(/image\/\w*/)){
                         var objectURL = window.URL.createObjectURL(this.files[0]);
                         var _image = '<img src="'+objectURL+'" />';
+                        _image.onload = function(){
+                            window.URL.revokeObjectURL(this.src);
+                        };
                         var $_sildeImageBox = $sildeImageBox.clone().attr({
                             "data-src": objectURL,
+                            "data-id":0,
                             "data-sildeImageBox": 1
+                        }).data({
+                            "file": this.files[0]
                         });
+                        console.log(_image);
                         $_sildeImageBox.find(".slideImageUpload").append(_image);
                         $_sildeImageBox.insertBefore($this);
                     }
@@ -165,10 +173,6 @@ function uiComponentEventBind(){
                 });
             }
         });
-    });
-    $(".admin_ui_cont").on('click','.deleteButton',function(){
-        var $deleteButton = $(this);
-        $deleteButton.closest(".amin_ui_slideImageBox").remove();
     });
     // 上传轮播图部分 结束
 }
@@ -238,7 +242,30 @@ function handleNullObject(object,key){
     }
     return value;
 }
-
+// base64转blob
+function dataURL2Bolb(dataURL) {
+    var arr = dataURL.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {
+        type: mime
+    });
+}
+// img对象获得base64
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL;
+}
 
 
 

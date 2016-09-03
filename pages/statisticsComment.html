@@ -14,19 +14,7 @@
 						<th>意见详情</th>
 					</tr>
 				</thead>
-				<tbody class="admin_ui_table_hoverEffect">
-					<tr>
-						<td>
-							345
-						</td>
-						<td>猪八戒</td>
-						<td>
-							2016-08-10 10:29:43
-						</td>
-						<td class="admin_ui_table_action">
-							陈春霞
-						</td>
-					</tr>
+				<tbody id="opinionManagement_opinionData" class="admin_ui_table_hoverEffect">
 				</tbody>
 			</table>
 			<div class="admin_ui_pagination">
@@ -38,7 +26,27 @@
 <script type="text/javascript">
 	$.when(getStatisticsComment()).done(function(data){
 		if(data.state == 0){
-			
+			var html = "";
+			for(var i = 0, length = data.opinion.length; i < length; i++){
+				var opinion = data.opinion[i];
+				var user = opinion.user;
+				html+= '<tr>'+
+							'<td>'+user.id+'</td>'+
+							'<td>'+
+								'<a class="admin_ui_link" href="#/userManagementDetail.html?'+encodeURI(JSON.stringify(user))+'">'+
+								user.userinfo.nick+
+								'</a>'+
+							'</td>'+
+							'<td>'+
+								stamp2time(opinion.in_time)+
+							'</td>'+
+							'<td>'+
+								opinion.text+
+							'</td>'+
+						'</tr>';
+			}
+			$("#opinionManagement_opinionData").append(html);
+			TablePage(".admin_ui_table",10);
 		}
 	})
 	TablePage(".admin_ui_table",10);

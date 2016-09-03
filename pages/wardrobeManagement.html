@@ -17,7 +17,7 @@
 						<th>衣橱id</th>
 						<th>发布人</th>
 						<th>季节</th>
-						<th>标签id</th>
+						<th>标签</th>
 					</tr>
 				</thead>
 				<tbody id="wardrobeManagement_data" class="admin_ui_table_hoverEffect">
@@ -38,7 +38,7 @@
 				html+= '<tr data-pointId="'+point.id+'">'+
 							'<td>'+point.id+'</td>'+
 							'<td>'+
-								"发布人暂缺"+
+								point.users.userinfo.nick+
 							'</td>'+
 							'<td>'+point.season+'</td>'+
 							'<td>'+
@@ -54,7 +54,11 @@ var colorList = ["admin_ui_colorLabel_red","admin_ui_colorLabel_green","admin_ui
 function getLabelList(pointShows){
 	var html = "";
 	for(var i = 0, length = pointShows.length; i < length; i++){
-		html += '<a href="'+pointShows[i].url+'" class="admin_ui_colorLabel '+colorList[i%3]+'">'+pointShows[i].name+'</a>';
+		var url = pointShows[i].url;
+		if(url&&url.search(/^(?:http||https):\/\//)){
+			url = "http://"+url;
+		}
+		html += '<a href="'+url+'" class="admin_ui_colorLabel '+colorList[i%3]+'" style="margin-right: 8px;">'+pointShows[i].name+'</a>';
 	}
 	return html;
 }

@@ -414,6 +414,7 @@ tinymce.PluginManager.add('image', function(editor) {
 				onclick: function(e){
 					var fileDom = document.createElement('input');
 					fileDom.type = 'file';
+					fileDom.accept="image/*";
 					fileDom.click();
 					fileDom.addEventListener('change',function(event){
 						var objectURL = window.URL.createObjectURL(fileDom.files[0]);
