@@ -11,7 +11,7 @@ $(function(){
         $.when(getMyInfo()).done(function(data){
             if(data.state == 0){
                 var info = data.info;
-                $("#admin_name").text(info.nick||"管理员");
+                $("#admin_name").text(info.nick);
             }
         });
     	eventBind();
@@ -175,6 +175,12 @@ function uiComponentEventBind(){
         });
     });
     // 上传轮播图部分 结束
+
+    // 搜索框
+    $("#searching").bind('click',function(){
+        var keyword = $("#search").val();
+        var tbody = $(".admin_ui_table>tbody");
+    })
 }
 function windowReset(){
 	var h =  $(window).height()-$(ADMIN_CONFIG.headerSelector).height();
@@ -189,6 +195,14 @@ function loadContent() {
         uiComponentEventBind();
     });
 }
+var Tvm = Vue.extend({
+    data: function(){
+        return {JSON: JSON}
+    },
+    methods: {
+        stamp2time: stamp2time
+    }
+})
 // 时间戳转化为时间
 function stamp2time(stamp) {
     var time = new Date(stamp);
@@ -218,6 +232,7 @@ function stamp2time(stamp) {
     //    }
     //}
 }
+
 function getQueryData(){
     var URI = decodeURI(window.location.hash.split("?")[1]);
     var parseURI = URI;
@@ -266,7 +281,6 @@ function getBase64Image(img) {
     var dataURL = canvas.toDataURL("image/png");
     return dataURL;
 }
-
 
 
 
