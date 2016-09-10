@@ -10,17 +10,17 @@
 					<tbody>
 						<td class="admin_ui_leadForm_lead" style="width: 35%">
 							<h3>
-								<i class="fa fa-user admin_ui_mainColor"></i>
-								账户
+								<i class="fa fa-unlock-alt admin_ui_mainColor"></i>
+								账户与密码
 							</h3>
 							<p>
-								您可以修改您的用户名
+								请在安全的网络中修改密码；切勿在网吧或他人电脑进行操作
 							</p>
 						</td>
 						<td>
 							<div class="admin_ui_form_field">
-								<div class="admin_ui_name">用户名</div>
-								<input id="adminAccount_adminName" class="admin_ui_input" type="text" value="" />
+								<div id="adminAccount_adminName" class="admin_ui_name">用户名</div>
+								<input class="admin_ui_input" type="text" value="" />
 							</div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">角色</div>
@@ -30,26 +30,8 @@
 										<option>一般管理员</option>
 									</select>
 								</div>
-							</div>		
-							<div id="changeUserNameButton" class="admin_ui_button admin_ui_button_green" style="margin-top: 40px;">
-								确定修改
-							</div>
-						</td>
-					</tbody>
-				</table>
-				<div class="admin_ui_separator"></div>
-				<table class="admin_ui_leadForm">
-					<tbody>
-						<td class="admin_ui_leadForm_lead" style="width: 35%">
-							<h3>
-								<i class="fa fa-unlock-alt admin_ui_mainColor"></i>
-								修改密码
-							</h3>
-							<p>
-								请在安全的网络中修改密码；切勿在网吧或他人电脑进行操作
-							</p>
-						</td>
-						<td>
+							</div>								
+							<div class="admin_ui_separator"></div>
 							<div class="admin_ui_form_field">
 								<div class="admin_ui_name">原密码</div>
 								<input id="oldPassword" class="admin_ui_input" type="password" placeholder="请输入原密码" />
@@ -112,19 +94,8 @@
 	</div>
 </div>
 <script>
-$.when(getMyInfo()).done(function(data){
-    if(data.state == 0){
-        var info = data.info;
-        $("#adminAccount_adminName").val(info.nick);
-    }
-});
-$("#changeUserNameButton").bind('click',function(){
-	$.when(setMyNickName($("#adminAccount_adminName").val())).done(function(data){
-		if(data.state == 0){
-			alert("修改成功");
-		}
-	});
-});
+// 把头部的管理员名字直接拷过来
+$("#adminAccount_adminName").val($("#admin_name").text());
 $("#changePasswordButton").bind('click',function(){
 	var oldPassword = $.trim($("#oldPassword").val()),
 		newPassword = $.trim($("#newPassword").val()),

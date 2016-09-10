@@ -121,19 +121,6 @@ function getUser(){
 	});
 	return ajax;
 }
-// 用户管理 删除用户
-function deleteUser(userId){
-	var ajax = $.ajax({
-		url: "/admin/getUser",
-		data:{
-			"user": userId
-		},
-		type: "POST",
-		success: successHandle,
-		error: errorHandle
-	});
-	return ajax;
-}
 //用户管理 改变用户信息
 function changeUserInfo(id,nick,height,weight,bust,waistline,hips,taobao,jingdong,phone){
 	var ajax = $.ajax({
@@ -398,18 +385,7 @@ function getGlobal(name){
 	});
 	return ajax;
 }
-function setMyNickName(nickName){
-	var ajax = $.ajax({
-		url: "/api/my_info",
-		type: "POST",
-		data:{
-			"nick": nickName
-		},
-		success: successHandle,
-		error: errorHandle
-	});
-	return ajax;
-}
+
 
 
 
