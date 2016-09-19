@@ -8,7 +8,7 @@
 @blueColor: #00acec;
 @textColor: #999;
 .redColor{
-	color: @redColor;
+	color: @redColor !important;
 }
 .greenColor{
 	color: @greenColor;
@@ -179,7 +179,12 @@ body{
 	height: 100%;
 	background-color: #fbfbfb;
 	overflow: hidden;
-	&>.admin_content_innerBox{
+	.admin_content_template{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.admin_content_innerBox{
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
@@ -187,7 +192,7 @@ body{
 			padding-bottom: 50px;
 		}
 	}
-	&>.admin_ui_cont_bottomFixed{
+	.admin_ui_cont_bottomFixed{
 		position: absolute;
 		bottom: 0;
 		left: 0;

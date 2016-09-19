@@ -25,9 +25,10 @@ function eventBind(){
     $(window).bind('click', function(){
         $("[data-hideWhenBlur]").hide();
     });
-    $(window).on('click','[data-urlBack]',function(){
+    $('body').on('click','[data-urlback]',function(){
+        console.log(1);
         window.history.back();
-    })
+    });
 	$(ADMIN_CONFIG.headerSelector+" .client").bind("click",function(e){
         if($("#admin_ui_dropdown_menu").is(":hidden")){
           	$("#admin_ui_dropdown_menu").show();
@@ -202,7 +203,7 @@ var Tvm = Vue.extend({
     methods: {
         stamp2time: stamp2time
     }
-})
+});
 // 时间戳转化为时间
 function stamp2time(stamp) {
     var time = new Date(stamp);
@@ -234,7 +235,9 @@ function stamp2time(stamp) {
 }
 
 function getQueryData(){
-    var URI = decodeURI(window.location.hash.split("?")[1]);
+    var search = /\?(.*)/.exec(window.location.hash);
+        search = search?search:"";
+    var URI = decodeURI(search&&search[1]);
     var parseURI = URI;
     if(URI){
         try{
@@ -281,6 +284,11 @@ function getBase64Image(img) {
     var dataURL = canvas.toDataURL("image/png");
     return dataURL;
 }
-
+// 获取图片
+function getImageByUrl(url,width,height){
+    width = width?width:"";
+    height = height?height:"";
+    return "/map?photo="+url+"&width="+width+"&height="+height;
+}
 
 

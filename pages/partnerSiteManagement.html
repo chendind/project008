@@ -1,8 +1,8 @@
-<div class="admin_content_innerBox" id="admin_content_innerBox">
+<div class="admin_content_innerBox admin_ui_cont_bottomPadding" id="admin_content_innerBox">
 	<div class="admin_scrollBox">
 		<div class="admin_ui_header">
-			<i class="fa fa-black-tie fa-2x admin_ui_mainColor"></i>
-			<span class="maintitle">衣橱管理</span>
+			<i class="fa fa-internet-explorer fa-2x admin_ui_mainColor"></i>
+			<span class="maintitle">合作网站管理</span>
 		</div>	
 		<div class="admin_ui_cont">
 			<div class="admin_ui_search">
@@ -14,21 +14,30 @@
 			<table class="admin_ui_table">
 				<thead>
 					<tr>
-						<th>衣橱id</th>
-						<th>发布人</th>
-						<th>季节</th>
-						<th>标签</th>
+						<th>网站id</th>
+						<th>网站名称</th>
+						<th>网址</th>
+						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody id="wardrobeManagement_data" class="admin_ui_table_hoverEffect">
-					<tr v-for="point in dataSource_filter" v-show="$index >= (pageIndex-1)*10 && $index < pageIndex*10">
-						<td>{{point.id}}</td>
+				<tbody class="admin_ui_table_hoverEffect">
+					<tr v-for="website in dataSource_filter" v-show="$index >= (pageIndex-1)*10 && $index < pageIndex*10">
 						<td>
-							{{point.users.userinfo.nick}}
+							{{website.id}}
 						</td>
-						<td>{{point.season}}</td>
+						<td>{{website.name}}</td>
 						<td>
-							<a v-for="pointShow in point.pointShows" href="{{pointShow.url}}" class="admin_ui_colorLabel {{colorList[$index%3]}}" style="margin-right: 8px;">{{pointShow.name}}</a>
+							{{website.url}}
+						</td>
+						<td class="admin_ui_table_action">
+							<a href="#/partnerSiteManagementDetail.html?{{encodeURI(JSON.stringify(website))}}" class="iconButton checkIcon">
+								<i class="fa fa-pencil"></i>
+								编辑
+							</a>
+							<div class="iconButton removeIcon" @click="removeWebsite($index)">
+								<i class="fa fa-remove"></i>
+								删除
+							</div>
 						</td>
 					</tr>
 				</tbody>
@@ -39,6 +48,13 @@
 		</div>
 	</div>
 </div>
+<div class="admin_ui_cont_bottomFixed">
+	<div class="admin_ui_button_group" style="float: right">
+		<a href="#/partnerSiteManagementDetail.html" class="admin_ui_button admin_ui_button_green">
+			新增
+		</a>
+	</div>
+</div>
 <script type="text/javascript">
 var vm = new Tvm({
 	el: '#admin_content_innerBox',
@@ -46,8 +62,7 @@ var vm = new Tvm({
 		keyword: "",
 		dataSource: [],
 		dataSource_filter: [],
-		pageIndex: 1,
-		colorList: ["admin_ui_colorLabel_red","admin_ui_colorLabel_green","admin_ui_colorLabel_yellow"]
+		pageIndex: 1
 	},
 	computed: {
 	},
@@ -57,11 +72,7 @@ var vm = new Tvm({
 			self.dataSource_filter = [];
 			for(index in self.dataSource){
 				var _data = self.dataSource[index];
-				var labelString = "";
-				for(j in _data.pointShows){
-					labelString += _data.pointShows[j].name+" ";
-				}
-				if(self.isContainKeyword([_data.id,_data.season, _data.users.userinfo.nick, labelString],self.keyword)){
+				if(self.isContainKeyword([_data.id,_data.name, _data.url],self.keyword)){
 					self.dataSource_filter.push(_data);
 				}
 			}
@@ -96,13 +107,26 @@ var vm = new Tvm({
 			    	self.pageIndex = index;
 			    }
 			});
+		},
+		removeWebsite: function(index){
+			var self = this;
+			var id = self.dataSource_filter[index].id;
+			if(confirm("您确定删除这个网站吗？")){
+				$.when(deletePartnerSite(id)).done(function(data){
+					if(data.state == 0){
+						alert("删除成功");
+						self.dataSource_filter.splice(index,1);
+						self.refreshTable();
+					}
+				})
+			}
 		}
 	},
 	created: function(){
 		var self = this;
-		$.when(getWardrobe()).done(function(data){
+		$.when(getPartnerSites()).done(function(data){
 			if(data.state == 0){
-				self.dataSource = data.point;
+				self.dataSource = data.website;
 				self.dataSource_filter = self.dataSource;
 				self.refreshTable();
 			}
@@ -110,23 +134,3 @@ var vm = new Tvm({
 	}
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

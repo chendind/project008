@@ -3,19 +3,14 @@ function errorHandle(){
 	alert("网络异常");
 }
 function successHandle(data){
-	if(data.state == 10001){
+	if(data.state == 0){}
+	else if(data.state == 10001){
 		alert("登录超时,请重新登录");
 		window.location.href="sign_in.html";
 	}
-	else if(data.state == 10000){
+	else if(data.msg){
 		alert(data.msg);
 	}
-}
-// 获取图片
-function getImageByUrl(url,width,height){
-	width = width?width:"";
-	height = height?height:"";
-	return "/map?photo="+url+"&width="+width+"&height="+height;
 }
 function uploadImage(formData){
 	var ajax = $.ajax({
@@ -71,6 +66,16 @@ function changePassword(oldPassword,newPassword){
 function getMyInfo(){
 	var ajax = $.ajax({
 		url: "/front/my_info",
+		type: "POST",
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 获取管理员信息
+function getAdmin(){
+	var ajax = $.ajax({
+		url: "/admin/info",
 		type: "POST",
 		success: successHandle,
 		error: errorHandle
@@ -398,6 +403,7 @@ function getGlobal(name){
 	});
 	return ajax;
 }
+// 管理员设置自己昵称
 function setMyNickName(nickName){
 	var ajax = $.ajax({
 		url: "/api/my_info",
@@ -410,10 +416,89 @@ function setMyNickName(nickName){
 	});
 	return ajax;
 }
-
-
-
-
+// 获得品牌街
+function getBrands(){
+	var ajax = $.ajax({
+		url: "/front/brands",
+		type: "POST",
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 编辑品牌街
+function editBrand(id,name,url){
+	if(url&&url.search(/^(?:http||https):\/\//)){
+		url = "http://"+url;
+	}
+	var ajax = $.ajax({
+		url: "/admin/editBrand",
+		type: "POST",
+		data:  {
+			"id": id,
+			"name": name,
+			"url": url
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 删除某一条品牌街
+function deleteBrand(id){
+	var ajax = $.ajax({
+		url: "/admin/deleteBrands",
+		type: "POST",
+		data:  {
+			"id[0]": id
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 获得合作网站
+function getPartnerSites(){
+	var ajax = $.ajax({
+		url: "/front/other",
+		type: "POST",
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 编辑合作网站
+function editPartnerSite(id,name,url,photo){
+	if(url&&url.search(/^(?:http||https):\/\//)){
+		url = "http://"+url;
+	}
+	var ajax = $.ajax({
+		url: "/admin/editWebsite",
+		type: "POST",
+		data:{
+			"id": id,
+			"name": name,
+			"url": url,
+			"photo": photo
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
+// 删除合作网站
+function deletePartnerSite(id){
+	var ajax = $.ajax({
+		url: "/admin/deleteWebsite",
+		type: "POST",
+		data: {
+			"id": id
+		},
+		success: successHandle,
+		error: errorHandle
+	});
+	return ajax;
+}
 
 
 

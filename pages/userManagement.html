@@ -22,7 +22,7 @@
 					</tr>
 				</thead>
 				<tbody id="userManagement_userData" class="admin_ui_table_hoverEffect">
-					<tr v-for="user in usersDataSource_filter" v-show="$index >= (pageIndex-1)*10 && $index < pageIndex*10">
+					<tr v-for="user in dataSource_filter" v-show="$index >= (pageIndex-1)*10 && $index < pageIndex*10">
 						<td>{{user.id}}</td>
 						<td>{{user.userinfo.nick?user.userinfo.nick:""}}</td>
 						<td>{{user.userinfo.phone?user.userinfo.phone:""}}</td>
@@ -34,14 +34,14 @@
 							</a>
 							<div class="iconButton removeIcon" @click="deleteUserButton($index)">
 								<i class="fa fa-remove"></i>
-								删除
+								禁用
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="admin_ui_pagination">
-				<div class="M-box pc"></div>
+				<div class="M-box pc" v-show="dataSource_filter.length>0"></div>
 			</div>
 		</div>
 	</div>
@@ -51,8 +51,8 @@ var vm = new Tvm({
 	el: '#admin_content_innerBox',
 	data:{
 		keyword: "",
-		usersDataSource: [],
-		usersDataSource_filter: [],
+		dataSource: [],
+		dataSource_filter: [],
 		pageIndex: 1
 	},
 	computed: {
@@ -60,11 +60,11 @@ var vm = new Tvm({
 	methods: {
 		search: function(){
 			var self = this;
-			self.usersDataSource_filter = [];
-			for(index in self.usersDataSource){
-				var _user = self.usersDataSource[index];
+			self.dataSource_filter = [];
+			for(index in self.dataSource){
+				var _user = self.dataSource[index];
 				if(self.isContainKeyword([_user.id, stamp2time(_user.in_time), _user.userinfo.nick, _user.userinfo.nick.phone],self.keyword)){
-					self.usersDataSource_filter.push(_user);
+					self.dataSource_filter.push(_user);
 				}
 			}
 			self.refreshTable();
@@ -86,7 +86,7 @@ var vm = new Tvm({
 		refreshTable: function(){
 			var self = this;
 			$('.M-box').pagination({
-				totalData: self.usersDataSource_filter.length,
+				totalData: self.dataSource_filter.length,
 			    showData: 10,
 			    current: self.pageIndex,
 			    count: 3,
@@ -102,10 +102,10 @@ var vm = new Tvm({
 		deleteUserButton: function(index){
 			var self = this;
 			if(confirm("您确定要删除该用户吗？")){
-				$.when(deleteUser(self.usersDataSource_filter[index].id)).done(function(data){
+				$.when(deleteUser(self.dataSource_filter[index].id)).done(function(data){
 					if(data.state == 0){
 						alert("删除成功");
-						self.usersDataSource_filter.splice(index,1);
+						self.dataSource_filter.splice(index,1);
 						self.refreshTable();
 					}
 				});
@@ -116,8 +116,8 @@ var vm = new Tvm({
 		var self = this;
 		$.when(getUser()).done(function(data){
 			if(data.state == 0){
-				self.usersDataSource = data.user;
-				self.usersDataSource_filter = self.usersDataSource;
+				self.dataSource = data.user;
+				self.dataSource_filter = self.dataSource;
 				self.refreshTable();
 			}
 		});

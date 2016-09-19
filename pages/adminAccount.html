@@ -69,7 +69,7 @@
 					</tbody>
 				</table>
 				<div class="admin_ui_separator"></div>
-				<table class="admin_ui_leadForm">
+				<table class="admin_ui_leadForm" id="addNewAdminTable" style="display: none;">
 					<tbody>
 						<td class="admin_ui_leadForm_lead" style="width: 35%">
 							<h3>
@@ -112,10 +112,14 @@
 	</div>
 </div>
 <script>
-$.when(getMyInfo()).done(function(data){
+$.when(getAdmin()).done(function(data){
     if(data.state == 0){
-        var info = data.info;
+        var info = data.user.userinfo;
         $("#adminAccount_adminName").val(info.nick);
+        if(data.competence == 3){
+        	// 超级管理员
+        	$("#addNewAdminTable").show();
+        }
     }
 });
 $("#changeUserNameButton").bind('click',function(){
